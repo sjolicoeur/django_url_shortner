@@ -34,14 +34,14 @@ def decode(value):
 
 def generate_shortned_string(url) :
     adler_url = zlib.adler32(url)
-    compressed_string = compress ( adler_url )
+    compressed_string = compress ( str(adler_url) )
     shortned_string =  base64.urlsafe_b64encode( compressed_string ).replace("=","").replace("-","").replace("_","")
     return shortned_string
 
 
 class ShortUrl(models.Model):
     url = models.URLField( verify_exists=True, max_length=255)
-    url_bit = models.CharField(  unique=True, default = "-1" )
+    url_bit = models.CharField(  unique=True, default = "-1" , max_length=40)
 
     def save(self,*args, **kwargs):
         if self.url_bit == "-1" :
