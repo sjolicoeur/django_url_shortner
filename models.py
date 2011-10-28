@@ -2,7 +2,7 @@
 from django.db import models
 import random, base64, zlib
 from django.db.utils import IntegrityError
-
+from django.core.urlresolvers import reverse
 
 ################################################################################
 
@@ -42,6 +42,10 @@ def generate_shortned_string(url) :
 class ShortUrl(models.Model):
     url = models.URLField( verify_exists=True, max_length=255)
     url_bit = models.CharField(  unique=True, default = "-1" , max_length=40)
+
+    def get_absolute_url(self):
+        abs_url = reverse('shortner_url', kwargs = {'short_url': self.url_bit})
+        return abs_url
 
     def save(self,*args, **kwargs):
         if self.url_bit == "-1" :
