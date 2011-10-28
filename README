@@ -1,0 +1,2 @@
+small snipped of code to shorten url by making an adler of the string than compressing it and then base64 encoding it
+
